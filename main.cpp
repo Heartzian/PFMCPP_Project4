@@ -8,7 +8,7 @@
  Purpose:  This project will take you through the process of writing a class that wraps a numeric type, beginning with writing simple member functions and ending with a fully templated class with lots of functionality. 
  
  1) write 3 UDTs named FloatType, DoubleType, IntType.
- 
+
  2) give each UDT the following member functions:
         add( lhs, rhs );
         subtract( lhs, rhs );
@@ -94,7 +94,91 @@ good to go!
 #include <iostream>
 int main() 
 {
-    FloatType ft;
+    struct ft
+    {
+        float lhs;
+        float rhs;
+        float add(lhs, rhs)
+        {
+            return lhs + rhs;
+        }
+        float subtract(lhs, rhs)
+        {
+            return lhs - rhs;
+        }
+        float multiply(lhs, rhs)
+        {
+            return lhs * rhs;
+        }
+        float divide(lhs, rhs)
+        {
+            if (rhs = 0)
+            {
+                rhs = 0.0001;
+                return std::cout << "can't divide by zero" << "Error" << lhs / rhs << std::endl;
+            else
+                return lhs / rhs;
+            }
+        }
+    };
+     
+    struct db
+    {
+        double lhs;
+        double rhs;
+        double add( lhs, rhs )
+        {
+            return lhs + rhs;
+        }
+        double subtract( lhs, rhs )
+        {
+            return lhs - rhs;
+        }
+        double multiply( lhs, rhs )
+        {
+            return lhs * rhs;
+        }
+        double divide( lhs, rhs )
+        {
+            if (rhs = 0)
+            {
+                rhs = 0.0001;
+                return std::cout << "can't divide by zero" << "Error" << lhs / rhs << std::endl;
+            else
+                return lhs / rhs;
+            }
+        }
+    };
+
+    struct i
+    {
+        int lhs;
+        int rhs;
+        int add( lhs, rhs )
+        {
+            return lhs + rhs;
+        }
+        int subtract( lhs, rhs )
+        {
+            return lhs - rhs;
+        }
+        int multiply( lhs, rhs )
+        {
+            return lhs * rhs;
+        }
+        int divide( lhs, rhs )
+        {
+            if (rhs = 0)
+            {
+                rhs = 1;
+                return std::cout << "can't divide by zero" << "Error" << lhs / rhs << std::endl;
+            else
+                return lhs / rhs;
+            }
+        }
+    };
+        
+    //FloatType ft;
     std::cout << "result of ft.add(): " << ft.add( 123.456f, 432.1f) << std::endl;
     std::cout << "result of ft.subtract(): " << ft.subtract( 123.456f, 432.1f) << std::endl;
     std::cout << "result of ft.multiply(): " << ft.multiply( 123.456f, 432.1f) << std::endl;
@@ -105,7 +189,7 @@ int main()
     std::cout << "result of ft.multiply(): " << ft.multiply( 4444.56f, 0.0f) << std::endl;
     std::cout << "result of ft.divide(): " << ft.divide( 4444.56f, 0.0f) << std::endl;
 
-    DoubleType db;
+    //DoubleType db;
     std::cout << "result of db.add(): " << db.add( 123.456, 432.1) << std::endl;
     std::cout << "result of db.subtract(): " << db.subtract( 123.456, 432.1) << std::endl;
     std::cout << "result of db.multiply(): " << db.multiply( 123.456, 432.1) << std::endl;
@@ -116,7 +200,7 @@ int main()
     std::cout << "result of db.multiply(): " << db.multiply( 123.456, 0.0) << std::endl;
     std::cout << "result of db.divide(): " << db.divide( 123.456, 0.0) << std::endl;
 
-    IntType i;
+    //IntType i;
     std::cout << "result of i.add(): " << i.add( 10, 20) << std::endl;
     std::cout << "result of i.subtract(): " << i.subtract( 10, 20) << std::endl;
     std::cout << "result of i.multiply(): " << i.multiply( 10, 20) << std::endl;
