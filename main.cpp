@@ -94,91 +94,81 @@ good to go!
 #include <iostream>
 int main() 
 {
-    struct ft
+    struct FloatType
     {
-        float lhs;
-        float rhs;
-        float add(lhs, rhs)
+        float add( float lhs, float rhs)
         {
             return lhs + rhs;
         }
-        float subtract(lhs, rhs)
+        float subtract( float lhs, float rhs)
         {
             return lhs - rhs;
         }
-        float multiply(lhs, rhs)
+        float multiply( float lhs, float rhs)
         {
             return lhs * rhs;
         }
-        float divide(lhs, rhs)
+        float divide( float lhs, float rhs)
         {
-            if (rhs = 0)
+            if ( rhs == 0.0f )
             {
-                rhs = 0.0001;
-                return std::cout << "can't divide by zero" << "Error" << lhs / rhs << std::endl;
-            else
-                return lhs / rhs;
+                std::cout << "can't divide by zero" << std::endl;
             }
+            return lhs / 1e-6f;
         }
     };
      
-    struct db
+    struct DoubleType
     {
-        double lhs;
-        double rhs;
-        double add( lhs, rhs )
+        double add( double lhs, double rhs )
         {
             return lhs + rhs;
         }
-        double subtract( lhs, rhs )
+        double subtract( double lhs, double rhs )
         {
             return lhs - rhs;
         }
-        double multiply( lhs, rhs )
+        double multiply( double lhs, double rhs )
         {
             return lhs * rhs;
         }
-        double divide( lhs, rhs )
+        double divide( double lhs, double rhs )
         {
-            if (rhs = 0)
+            if ( rhs == 0.0 )
             {
-                rhs = 0.0001;
-                return std::cout << "can't divide by zero" << "Error" << lhs / rhs << std::endl;
-            else
-                return lhs / rhs;
+                rhs = 0.0000001;
+                std::cout << "can't divide by zero" << std::endl; 
             }
+            return lhs / rhs;
         }
     };
 
-    struct i
+    struct IntType
     {
-        int lhs;
-        int rhs;
-        int add( lhs, rhs )
+        int add( int lhs, int rhs )
         {
             return lhs + rhs;
         }
-        int subtract( lhs, rhs )
+        int subtract( int lhs, int rhs )
         {
             return lhs - rhs;
         }
-        int multiply( lhs, rhs )
+        int multiply( int lhs, int rhs )
         {
             return lhs * rhs;
         }
-        int divide( lhs, rhs )
+        int divide( int lhs, int rhs )
         {
-            if (rhs = 0)
+            if ( rhs == 0 )
             {
-                rhs = 1;
-                return std::cout << "can't divide by zero" << "Error" << lhs / rhs << std::endl;
-            else
-                return lhs / rhs;
+                rhs = lhs;
+                std::cout << "can't divide by zero" << std::endl;
             }
+            return lhs / rhs;
         }
     };
         
-    //FloatType ft;
+    FloatType ft;
     std::cout << "result of ft.add(): " << ft.add( 123.456f, 432.1f) << std::endl;
     std::cout << "result of ft.subtract(): " << ft.subtract( 123.456f, 432.1f) << std::endl;
     std::cout << "result of ft.multiply(): " << ft.multiply( 123.456f, 432.1f) << std::endl;
@@ -189,7 +179,7 @@ int main()
     std::cout << "result of ft.multiply(): " << ft.multiply( 4444.56f, 0.0f) << std::endl;
     std::cout << "result of ft.divide(): " << ft.divide( 4444.56f, 0.0f) << std::endl;
 
-    //DoubleType db;
+    DoubleType db;
     std::cout << "result of db.add(): " << db.add( 123.456, 432.1) << std::endl;
     std::cout << "result of db.subtract(): " << db.subtract( 123.456, 432.1) << std::endl;
     std::cout << "result of db.multiply(): " << db.multiply( 123.456, 432.1) << std::endl;
@@ -200,7 +190,7 @@ int main()
     std::cout << "result of db.multiply(): " << db.multiply( 123.456, 0.0) << std::endl;
     std::cout << "result of db.divide(): " << db.divide( 123.456, 0.0) << std::endl;
 
-    //IntType i;
+    IntType i;
     std::cout << "result of i.add(): " << i.add( 10, 20) << std::endl;
     std::cout << "result of i.subtract(): " << i.subtract( 10, 20) << std::endl;
     std::cout << "result of i.multiply(): " << i.multiply( 10, 20) << std::endl;
