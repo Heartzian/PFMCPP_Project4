@@ -179,7 +179,7 @@ int main()
 
 #include <iostream>
 
-//struct FloatType;
+struct FloatType;
 struct DoubleType;
 struct IntType;
 
