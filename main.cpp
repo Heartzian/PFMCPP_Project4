@@ -183,9 +183,11 @@ struct FloatType;
 struct DoubleType;
 struct IntType;
 
-struct heapFloatType
+struct HeapFloatType
 {
-    FloatType* ft;
+    FloatType* floatTypePtr;
+    HeapFloatType(FloatType* value) : floatTypePtr(value){}
+    ~HeapFloatType() { delete floatTypePtr; }
     float add( float lhs, float rhs );
     float subtract( float lhs, float rhs );
     float multiply( float lhs, float rhs );
@@ -213,9 +215,11 @@ float FloatType::divide( float lhs, float rhs )
     return lhs / rhs;
 }
      
-struct heapDoubleType
+struct HeapDoubleType
 {
-    DoubleType* dt;
+    DoubleType* doubleTypePtr;
+    HeapDoubleType(DoubleType* value) : doubleTypePtr(value) {}
+    ~HeapDoubleType() { delete doubleTypePtr; }
     double add( double lhs, double rhs );
     double subtract( double lhs, double rhs );
     double multiply( double lhs, double rhs );
@@ -244,9 +248,11 @@ double DoubleType::divide( double lhs, double rhs )
     return lhs / rhs;
 }
     
-struct heapIntType
+struct HeapIntType
 {
-    IntType* i;
+    IntType* inttTypePtr;
+    HeapIntType(IntType* value) : intTypePtr(value) {}
+    ~HeapIntType() { delete intTypePtr; }
     int add( int lhs, int rhs );
     int subtract( int lhs, int rhs );
     int multiply( int lhs, int rhs );
@@ -277,7 +283,7 @@ int IntType::divide( int lhs, int rhs )
 
 int main() 
 {
-    FloatType ft(new FloatType());
+    FloatType ft;
 
     std::cout << "result of ft.add(): " << ft.add(123.456f, 432.1f)  << std::endl;
     std::cout << "result of ft.subtract(): " << ft.subtract(123.456f, 432.1f) << std::endl;
