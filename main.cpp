@@ -11,18 +11,17 @@ New/This/Pointers/References conclusion
  
  0) in the blank space below, declare/define an empty struct named 'A' on a single Line. 
      on the lines below it, write a struct named 'HeapA' that correctly shows how to own an instance of 'A' 
-         on the heap without leaking, without using smart pointers. 
+         on the heap without leaking, without using smart pointers.  
  */
 
+struct A {};
 
-
-
-
-
-
-
-
-
+struct HeapA
+{
+    A* a;
+    HeapA() : a(new A()){}
+    ~HeapA() { delete a; }
+};
 
  /*
  1) Edit your 3 structs so that they own a heap-allocated primitive type without using smart pointers named 'value'
