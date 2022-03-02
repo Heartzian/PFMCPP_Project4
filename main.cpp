@@ -34,7 +34,7 @@ struct HeapA
  3) modify those add/subtract/divide/multiply member functions from chapter 2 on it
          a) make them modify the owned numeric type
          b) set them up so they can be chained together.
-             i.e.
+             i.e. 
              DoubleType dt(3.5);
              dt.add(3.0).multiply(-2.5).divide(7.2); //an example of chaining
  
@@ -179,8 +179,13 @@ int main()
 
 #include <iostream>
 
-struct FloatType
+struct FloatType;
+struct DoubleType;
+struct IntType;
+
+struct heapFloatType
 {
+    FloatType* ft;
     float add( float lhs, float rhs );
     float subtract( float lhs, float rhs );
     float multiply( float lhs, float rhs );
@@ -208,8 +213,9 @@ float FloatType::divide( float lhs, float rhs )
     return lhs / rhs;
 }
      
-struct DoubleType
+struct heapDoubleType
 {
+    DoubleType* dt;
     double add( double lhs, double rhs );
     double subtract( double lhs, double rhs );
     double multiply( double lhs, double rhs );
@@ -238,8 +244,9 @@ double DoubleType::divide( double lhs, double rhs )
     return lhs / rhs;
 }
     
-struct IntType
+struct heapIntType
 {
+    IntType* i;
     int add( int lhs, int rhs );
     int subtract( int lhs, int rhs );
     int multiply( int lhs, int rhs );
@@ -270,7 +277,7 @@ int IntType::divide( int lhs, int rhs )
 
 int main() 
 {
-    FloatType ft;
+    FloatType ft(new FloatType());
 
     std::cout << "result of ft.add(): " << ft.add(123.456f, 432.1f)  << std::endl;
     std::cout << "result of ft.subtract(): " << ft.subtract(123.456f, 432.1f) << std::endl;
