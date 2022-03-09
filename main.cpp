@@ -134,7 +134,7 @@ struct HeapA
 
 #include <iostream>
 
-//struct FloatType;
+struct FloatType;
 struct DoubleType;
 struct IntType;
 
@@ -148,8 +148,12 @@ struct FloatType
     FloatType& subtract( float lhs );
     FloatType& multiply( float lhs );
     FloatType& divide( float lhs );
- 
-};    
+
+    operator float()
+    {
+        return *value;
+    }
+ };    
 
 struct DoubleType
 {
@@ -161,7 +165,11 @@ struct DoubleType
     DoubleType& subtract( double lhs );
     DoubleType& multiply( double lhs );
     DoubleType& divide( double lhs );
-   
+
+    operator double()
+    {
+        return *value;
+    }   
 };
 
 struct IntType
@@ -174,7 +182,11 @@ struct IntType
     IntType& subtract( int lhs );
     IntType& multiply( int lhs );
     IntType& divide( int lhs );
-   
+
+    operator float()
+    {
+        return *value;
+    }
 };
 
 
