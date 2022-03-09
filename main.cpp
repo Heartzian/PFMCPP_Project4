@@ -148,19 +148,7 @@ struct FloatType
     FloatType& subtract( float lhs );
     FloatType& multiply( float lhs );
     FloatType& divide( float lhs );
-
-    FloatType& add( const FloatType& toAdd );
-    FloatType& subtract( const FloatType& toSub );
-    FloatType& multiply( const FloatType& toMult);
-    FloatType& divide( const FloatType& toDen );
-    FloatType& add( const DoubleType& toAdd );
-    FloatType& subtract( const DoubleType& toSub );
-    FloatType& multiply( const DoubleType& toMult);
-    FloatType& divide( const DoubleType& toDen );
-    FloatType& add( const IntType& toAdd );
-    FloatType& subtract( const IntType& toSub );
-    FloatType& multiply( const IntType& toMult);
-    FloatType& divide( const IntType& toDen );   
+ 
 };    
 
 struct DoubleType
@@ -173,19 +161,7 @@ struct DoubleType
     DoubleType& subtract( double lhs );
     DoubleType& multiply( double lhs );
     DoubleType& divide( double lhs );
-
-    DoubleType& add( const FloatType& toAdd );
-    DoubleType& subtract( const FloatType& toSub );
-    DoubleType& multiply( const FloatType& toMult);
-    DoubleType& divide( const FloatType& toDen );
-    DoubleType& add( const DoubleType& toAdd );
-    DoubleType& subtract( const DoubleType& toSub );
-    DoubleType& multiply( const DoubleType& toMult);
-    DoubleType& divide( const DoubleType& toDen );   
-    DoubleType& add( const IntType& toAdd );
-    DoubleType& subtract( const IntType& toSub );
-    DoubleType& multiply( const IntType& toMult);
-    DoubleType& divide( const IntType& toDen );    
+   
 };
 
 struct IntType
@@ -199,18 +175,6 @@ struct IntType
     IntType& multiply( int lhs );
     IntType& divide( int lhs );
    
-    IntType& add( const FloatType& toAdd );
-    IntType& subtract( const FloatType& toSub );
-    IntType& multiply( const FloatType& toMult);
-    IntType& divide( const FloatType& toDen );
-    IntType& add( const DoubleType& toAdd );
-    IntType& subtract( const DoubleType& toSub );
-    IntType& multiply( const DoubleType& toMult);
-    IntType& divide( const DoubleType& toDen );    
-    IntType& add( const IntType& toAdd );
-    IntType& subtract( const IntType& toSub );
-    IntType& multiply( const IntType& toMult);
-    IntType& divide( const IntType& toDen ); 
 };
 
 
@@ -240,55 +204,6 @@ FloatType& FloatType::divide( float lhs )
     return *this;
 }
 
-FloatType& FloatType::add( const FloatType& toAdd )
-{
-    return add( *toAdd.value );
-}
-FloatType& FloatType::subtract( const FloatType& toSub )
-{
-    return subtract( *toSub.value );
-}
-FloatType& FloatType::multiply( const FloatType& toMult )
-{
-    return multiply( *toMult.value );
-}
-FloatType& FloatType::divide( const FloatType& toDen )
-{
-    return divide( *toDen.value );
-}
-FloatType& FloatType::add( const DoubleType& toAdd )
-{
-    return add( *toAdd.value );
-}
-FloatType& FloatType::subtract( const DoubleType& toSub )
-{
-    return subtract( *toSub.value );
-}
-FloatType& FloatType::multiply( const DoubleType& toMult )
-{
-    return multiply( *toMult.value );
-}
-FloatType& FloatType::divide( const DoubleType& toDen )
-{
-    return divide( *toDen.value );
-}
-FloatType& FloatType::add( const IntType& toAdd )
-{
-    return add( *toAdd.value );
-}
-FloatType& FloatType::subtract( const IntType& toSub )
-{
-    return subtract( *toSub.value );
-}
-FloatType& FloatType::multiply( const IntType& toMult )
-{
-    return multiply( *toMult.value );
-}
-FloatType& FloatType::divide( const IntType& toDen )
-{
-    return divide( *toDen.value );
-}
-
 
 
 DoubleType& DoubleType::add( double lhs )
@@ -314,55 +229,6 @@ DoubleType& DoubleType::divide( double lhs )
     }
     *value /= lhs;
     return *this;  
-}
-
-DoubleType& DoubleType::subtract( const FloatType& toSub )
-{
-    return subtract( *toSub.value );
-}
-DoubleType& DoubleType::multiply( const FloatType& toMult )
-{
-    return multiply( *toMult.value );
-}
-DoubleType& DoubleType::divide( const FloatType& toDen )
-{
-    return divide( *toDen.value );
-}
-DoubleType& DoubleType::subtract( const DoubleType& toSub )
-{
-    return subtract( *toSub.value );
-}
-DoubleType& DoubleType::multiply( const DoubleType& toMult )
-{
-    return multiply( *toMult.value );
-}
-DoubleType& DoubleType::divide( const DoubleType& toDen )
-{
-    return divide( *toDen.value );
-}
-DoubleType& DoubleType::add( const FloatType& toAdd )
-{
-    return add( *toAdd.value );
-}
-DoubleType& DoubleType::add( const DoubleType& toAdd )
-{
-    return add( *toAdd.value );
-}
-DoubleType& DoubleType::add( const IntType& toAdd )
-{
-    return add( *toAdd.value );
-}
-DoubleType& DoubleType::subtract( const IntType& toSub )
-{
-    return subtract( *toSub.value );
-}
-DoubleType& DoubleType::multiply( const IntType& toMult )
-{
-    return multiply( *toMult.value );
-}
-DoubleType& DoubleType::divide( const IntType& toDen )
-{
-    return divide( *toDen.value );
 }
 
 
@@ -391,55 +257,6 @@ IntType& IntType::divide( int lhs )
     }
     *value /= lhs;
     return *this;
-}
-
-IntType& IntType::add( const FloatType& toAdd )
-{
-    return add( *toAdd.value );
-}
-IntType& IntType::subtract( const FloatType& toSub )
-{
-    return subtract( *toSub.value );
-}
-IntType& IntType::multiply( const FloatType& toMult )
-{
-    return multiply( *toMult.value );
-}
-IntType& IntType::divide( const FloatType& toDen )
-{
-    return divide( *toDen.value );
-}
-IntType& IntType::add( const DoubleType& toAdd )
-{
-    return add( *toAdd.value );
-}
-IntType& IntType::subtract( const DoubleType& toSub )
-{
-    return subtract( *toSub.value );
-}
-IntType& IntType::multiply( const DoubleType& toMult )
-{
-    return multiply( *toMult.value );
-}
-IntType& IntType::divide( const DoubleType& toDen )
-{
-    return divide( *toDen.value );
-}
-IntType& IntType::add( const IntType& toAdd )
-{
-    return add( *toAdd.value );
-}
-IntType& IntType::subtract( const IntType& toSub )
-{
-    return subtract( *toSub.value );
-}
-IntType& IntType::multiply( const IntType& toMult )
-{
-    return multiply( *toMult.value );
-}
-IntType& IntType::divide( const IntType& toDen )
-{
-    return divide( *toDen.value );
 }
 
 
