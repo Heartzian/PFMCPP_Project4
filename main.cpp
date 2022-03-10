@@ -124,7 +124,6 @@ struct IntType;
 
 struct FloatType
 {
-    float* value;
     FloatType( float v ) : value( new float( v ) ) {}
     ~FloatType() { delete value; }
 
@@ -138,11 +137,12 @@ struct FloatType
         return *value;
     }
 
+private:
+    float* value;
  };    
 
 struct DoubleType
 {
-    double* value;
     DoubleType( double v ) : value( new double( v ) ) {}
     ~DoubleType() { delete value; }
 
@@ -155,11 +155,13 @@ struct DoubleType
     {
         return *value;
     }   
+
+private:
+    double* value;
 };
 
 struct IntType
 { 
-    int* value;
     IntType( int v ) : value( new int( v ) ) {}
     ~IntType() { delete value; }  
 
@@ -172,6 +174,9 @@ struct IntType
     {
         return *value;
     }
+
+private:
+    int* value;
 };
 
 
