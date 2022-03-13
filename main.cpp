@@ -182,6 +182,7 @@ struct HeapA
  */
 
 #include <iostream>
+#include <cmath>
 
 struct FloatType;
 struct DoubleType;
@@ -197,9 +198,9 @@ struct FloatType
     FloatType& multiply( float lhs );
     FloatType& divide( float lhs );
 
-    operator float() { return *value; }
+    operator float() const { return *value; }
 
-    FloatType& pow(float ft);
+    FloatType& pow(float pft);
     FloatType& pow(const IntType&);
     FloatType& pow(const FloatType&);
     FloatType& pow(const DoubleType&);
@@ -219,9 +220,9 @@ struct DoubleType
     DoubleType& multiply( double lhs );
     DoubleType& divide( double lhs );
 
-    operator double() { return *value; }
+    operator double() const { return *value; }
 
-    DoubleType& pow(double db);
+    DoubleType& pow(double pdb);
     DoubleType& pow(const IntType&);
     DoubleType& pow(const FloatType&);
     DoubleType& pow(const DoubleType&);
@@ -241,9 +242,9 @@ struct IntType
     IntType& multiply( int lhs );
     IntType& divide( int lhs );
 
-    operator int() { return *value; }
+    operator int() const { return *value; }
 
-    IntType& pow(int i);
+    IntType& pow(int pi);
     IntType& pow(const IntType&);
     IntType& pow(const FloatType&);
     IntType& pow(const DoubleType&);    
@@ -280,29 +281,29 @@ FloatType& FloatType::divide( float lhs )
     return *this;
 }
 
-FloatType& FloatType::pow(float ft)
+FloatType& FloatType::pow(float pft)
 {
-    return powInternal(ft);
+    return powInternal(pft);
 }
 
 FloatType& FloatType::pow(const IntType& it)
 {
-    return powInternal(static_cast<float>it);
+    return powInternal(static_cast<float>(it));
 }
 
 FloatType& FloatType::pow(const FloatType& ft)
 {
-    return powInternal(static_cast<float>ft);
+    return powInternal(static_cast<float>(ft));
 }
 
 FloatType& FloatType::pow(const DoubleType& dt)
 {
-    return powInternal(static_cast<float>dt);
+    return powInternal(static_cast<float>(dt));
 }
 
 FloatType& FloatType::powInternal(const float num)
 {
-    *value = static_cast<float>(std::pow( *value, num ));
+    *value = std::pow( *value, num );
     return *this;
 }
 
@@ -341,17 +342,17 @@ DoubleType& DoubleType::pow(double db)
 
 DoubleType& DoubleType::pow(const IntType& it)
 {
-    return powInternal(static_cast<double>it);
+    return powInternal(static_cast<double>(it));
 }
 
 DoubleType& DoubleType::pow(const FloatType& ft)
 {
-    return powInternal(static_cast<double>ft);
+    return powInternal(static_cast<double>(ft));
 }
 
 DoubleType& DoubleType::pow(const DoubleType& dt)
 {
-    return powInternal(static_cast<double>dt);
+    return powInternal(static_cast<double>(dt));
 }
 
 DoubleType& DoubleType::powInternal(const double num)
@@ -394,22 +395,22 @@ IntType& IntType::pow(int i)
 
 IntType& IntType::pow(const IntType& it)
 {
-    return powInternal(static_cast<int>it);
+    return powInternal(static_cast<int>(it));
 }
 
 IntType& IntType::pow(const FloatType& ft)
 {
-    return powInternal(static_cast<int>ft);
+    return powInternal(static_cast<int>(ft));
 }
 
 IntType& IntType::pow(const DoubleType& dt)
 {
-    return powInternal(static_cast<int>dt);
+    return powInternal(static_cast<int>(dt));
 }
 
-intType& DoubleType::powInternal(const int num)
+IntType& IntType::powInternal(const int num)
 {
-    *value = static_cast<double>(std::pow( *value, num ));
+    *value = static_cast<int>(std::pow( *value, num ));
     return *this;
 }
 
@@ -437,8 +438,8 @@ struct Point
     }
     Point& multiply(const DoubleType& m)
     {
-        x *= m;
-        y *= m;
+        x *= static_cast<float>(m);
+        y *= static_cast<float>(m);
         return *this;
     }
 
