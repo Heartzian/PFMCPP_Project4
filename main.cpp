@@ -54,19 +54,6 @@ Project 4: Part 4 / 9
  */
 
 
-
-struct Point
-{
-    Point& multiply(float m)
-    {
-        x *= m;
-        y *= m;
-        return *this;
-    }
-private:
-    float x{0}, y{0};
-};
-
 void part4()
 {
     // ------------------------------------------------------------
@@ -509,6 +496,44 @@ intType& DoubleType::powInternal(const int num)
     *value = static_cast<double>(std::pow( *value, num ));
     return *this;
 }
+
+struct Point
+{
+    Point(float ft1, float ft2) : x(ft1), y(ft2) {}
+
+    Point& multiply(float m)
+    {
+        x *= m;
+        y *= m;
+        return *this;
+    }
+    Point& multiply(const IntType& m)
+    {
+        x *= m;
+        y *= m;
+        return *this;
+    }
+    Point& multiply(const FloatType& m)
+    {
+        x *= m;
+        y *= m;
+        return *this;
+    }
+    Point& multiply(const DoubleType& m)
+    {
+        x *= m;
+        y *= m;
+        return *this;
+    }
+
+    void toString()
+    {
+        std::cout << "Point x = " << x << "and y = " << y << std::endl;
+    }
+
+private:
+    float x{0}, y{0};
+};
 
 void part3()
 {
