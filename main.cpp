@@ -286,7 +286,7 @@ struct IntType;
 
 struct FloatType
 {
-    FloatType( float v ) : value( new float( v ) ) {}
+    FloatType( float val ) : value( new float( val ) ) {}
     ~FloatType() { delete value; }
 
     FloatType& add( float lhs );
@@ -303,11 +303,12 @@ struct FloatType
 
 private:
     float* value;
+    FloatType& powInternal(const float num);
  };    
 
 struct DoubleType
 {
-    DoubleType( double v ) : value( new double( v ) ) {}
+    DoubleType( double val ) : value( new double( val ) ) {}
     ~DoubleType() { delete value; }
 
     DoubleType& add( double lhs );
@@ -324,11 +325,12 @@ struct DoubleType
 
 private:
     double* value;
+    DoubleType& powInternal(const double num);
 };
 
 struct IntType
 { 
-    IntType( int v ) : value( new int( v ) ) {}
+    IntType( int val ) : value( new int( val ) ) {}
     ~IntType() { delete value; }  
 
     IntType& add( int lhs );
@@ -338,13 +340,14 @@ struct IntType
 
     operator int() { return *value; }
 
-    IntType& pow(int db);
+    IntType& pow(int i);
     IntType& pow(const IntType&);
     IntType& pow(const FloatType&);
     IntType& pow(const DoubleType&);    
 
 private:
     int* value;
+    IntType& powInternal(const int num);
 };
 
 
@@ -371,6 +374,32 @@ FloatType& FloatType::divide( float lhs )
         std::cout << "warning: floating point division by zero!" << std::endl;
     }
     *value /= lhs; 
+    return *this;
+}
+
+FloatType& FloatType::pow(float ft)
+{
+    return powInternal(ft);
+}
+
+FloatType& FloatType::pow(const IntType& it)
+{
+    return powInternal(static_cast<float>it);
+}
+
+FloatType& FloatType::pow(const FloatType& ft)
+{
+    return powInternal(static_cast<float>ft);
+}
+
+FloatType& FloatType::pow(const DoubleType& dt)
+{
+    return powInternal(static_cast<float>dt);
+}
+
+FloatType& FloatType::powInternal(const float num)
+{
+    *value = static_cast<float>(std::pow( *value, num ));
     return *this;
 }
 
@@ -402,6 +431,32 @@ DoubleType& DoubleType::divide( double lhs )
 }
 
 
+DoubleType& DoubleType::pow(double db)
+{
+    return powInternal(db);
+}
+
+DoubleType& DoubleType::pow(const IntType& it)
+{
+    return powInternal(static_cast<double>it);
+}
+
+DoubleType& DoubleType::pow(const FloatType& ft)
+{
+    return powInternal(static_cast<double>ft);
+}
+
+DoubleType& DoubleType::pow(const DoubleType& dt)
+{
+    return powInternal(static_cast<double>dt);
+}
+
+DoubleType& DoubleType::powInternal(const double num)
+{
+    *value = static_cast<double>(std::pow( *value, num ));
+    return *this;
+}
+
 
 IntType& IntType::add( int lhs )
 {
@@ -429,6 +484,31 @@ IntType& IntType::divide( int lhs )
     return *this;
 }
 
+IntType& IntType::pow(int i)
+{
+    return powInternal(i);
+}
+
+IntType& IntType::pow(const IntType& it)
+{
+    return powInternal(static_cast<int>it);
+}
+
+IntType& IntType::pow(const FloatType& ft)
+{
+    return powInternal(static_cast<int>ft);
+}
+
+IntType& IntType::pow(const DoubleType& dt)
+{
+    return powInternal(static_cast<int>dt);
+}
+
+intType& DoubleType::powInternal(const int num)
+{
+    *value = static_cast<double>(std::pow( *value, num ));
+    return *this;
+}
 
 void part3()
 {
