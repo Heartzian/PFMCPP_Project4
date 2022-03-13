@@ -294,10 +294,12 @@ struct FloatType
     FloatType& multiply( float lhs );
     FloatType& divide( float lhs );
 
-    operator float()
-    {
-        return *value;
-    }
+    operator float() { return *value; }
+
+    FloatType& pow(float ft);
+    FloatType& pow(const IntType&);
+    FloatType& pow(const FloatType&);
+    FloatType& pow(const DoubleType&);
 
 private:
     float* value;
@@ -313,10 +315,12 @@ struct DoubleType
     DoubleType& multiply( double lhs );
     DoubleType& divide( double lhs );
 
-    operator double()
-    {
-        return *value;
-    }   
+    operator double() { return *value; }
+
+    DoubleType& pow(double db);
+    DoubleType& pow(const IntType&);
+    DoubleType& pow(const FloatType&);
+    DoubleType& pow(const DoubleType&);
 
 private:
     double* value;
@@ -332,10 +336,12 @@ struct IntType
     IntType& multiply( int lhs );
     IntType& divide( int lhs );
 
-    operator int()
-    {
-        return *value;
-    }
+    operator int() { return *value; }
+
+    IntType& pow(int db);
+    IntType& pow(const IntType&);
+    IntType& pow(const FloatType&);
+    IntType& pow(const DoubleType&);    
 
 private:
     int* value;
