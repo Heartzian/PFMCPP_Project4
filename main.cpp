@@ -273,7 +273,7 @@ struct IntType;
 
 struct FloatType
 {
-    FloatType( float val ) : value( new float( val ) ) {}
+    explicit FloatType( float val ) : value( new float( val ) ) {}
     ~FloatType() { delete value; }
 
     FloatType& add( float lhs );
@@ -295,7 +295,7 @@ private:
 
 struct DoubleType
 {
-    DoubleType( double val ) : value( new double( val ) ) {}
+    explicit DoubleType( double val ) : value( new double( val ) ) {}
     ~DoubleType() { delete value; }
 
     DoubleType& add( double lhs );
@@ -317,7 +317,7 @@ private:
 
 struct IntType
 { 
-    IntType( int val ) : value( new int( val ) ) {}
+    explicit IntType( int val ) : value( new int( val ) ) {}
     ~IntType() { delete value; }  
 
     IntType& add( int lhs );
