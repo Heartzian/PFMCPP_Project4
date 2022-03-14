@@ -27,30 +27,30 @@ Do not delete your previous main.
  5) delete the example below after it makes sense how your code will change due to 1).
  */
 
-#include <iostream>
-namespace Example
-{
-    int main()
-    {
-        FloatType floatNum(4.3f);
-        IntType intNum(2);
-        IntType intNum2(6);
+// #include <iostream>
+// namespace Example
+// {
+//     int main()
+//     {
+//         FloatType floatNum(4.3f);
+//         IntType intNum(2);
+//         IntType intNum2(6);
 
-        /* 
-        if you previously had a line like this demonstrating chaining:
+//         /* 
+//         if you previously had a line like this demonstrating chaining:
             
-            intNum.add(3).add(4.5f).divide(floatNum); 
+//             intNum.add(3).add(4.5f).divide(floatNum); 
 
-        it should become:
-        */
-        intNum += 3;
-        intNum += 4.5f;
-        intNum /= floatNum;
-        std::cout << "intNum: " << intNum << std::endl;
+//         it should become:
+//         */
+//         intNum += 3;
+//         intNum += 4.5f;
+//         intNum /= floatNum;
+//         std::cout << "intNum: " << intNum << std::endl;
         
-        return 0;
-    }
-}
+//         return 0;
+//     }
+// }
 
  /*
  6) compile/link/run to make sure you don't have any errors or warnings.
@@ -200,10 +200,10 @@ struct FloatType
     explicit FloatType( float val ) : value( new float( val ) ) {}
     ~FloatType() { delete value; }
 
-    FloatType& add( float lhs );
-    FloatType& subtract( float lhs );
-    FloatType& multiply( float lhs );
-    FloatType& divide( float lhs );
+    FloatType& operator+=( float lhs );
+    FloatType& operator-=( float lhs );
+    FloatType& operator*=( float lhs );
+    FloatType& operator/=( float lhs );
 
     operator float() const { return *value; }
 
@@ -222,10 +222,10 @@ struct DoubleType
     explicit DoubleType( double val ) : value( new double( val ) ) {}
     ~DoubleType() { delete value; }
 
-    DoubleType& add( double lhs );
-    DoubleType& subtract( double lhs );
-    DoubleType& multiply( double lhs );
-    DoubleType& divide( double lhs );
+    DoubleType& operator+=( double lhs );
+    DoubleType& operator-=( double lhs );
+    DoubleType& operator*=( double lhs );
+    DoubleType& operator/=( double lhs );
 
     operator double() const { return *value; }
 
@@ -244,10 +244,10 @@ struct IntType
     explicit IntType( int val ) : value( new int( val ) ) {}
     ~IntType() { delete value; }  
 
-    IntType& add( int lhs );
-    IntType& subtract( int lhs );
-    IntType& multiply( int lhs );
-    IntType& divide( int lhs );
+    IntType& operator+=( int lhs );
+    IntType& operator-=( int lhs );
+    IntType& operator*=( int lhs );
+    IntType& operator/=( int lhs );
 
     operator int() const { return *value; }
 
@@ -263,22 +263,22 @@ private:
 
 
 
-FloatType& FloatType::add( float lhs)
+FloatType& FloatType::operator+=( float lhs)
 {
     *value += lhs;
     return *this;
 }
-FloatType& FloatType::subtract( float lhs )
+FloatType& FloatType::operator-=( float lhs )
 {
     *value -= lhs;
     return *this;
 }
-FloatType& FloatType::multiply( float lhs )
+FloatType& FloatType::operator*=( float lhs )
 {
     *value *= lhs;
     return *this;
 }
-FloatType& FloatType::divide( float lhs )
+FloatType& FloatType::operator/=( float lhs )
 {
     if ( lhs == 0.0f )
     {
@@ -316,22 +316,22 @@ FloatType& FloatType::powInternal(const float num)
 
 
 
-DoubleType& DoubleType::add( double lhs )
+DoubleType& DoubleType::operator+=( double lhs )
 {
     *value += lhs;
     return *this;
 }
-DoubleType& DoubleType::subtract( double lhs )
+DoubleType& DoubleType::operator-=( double lhs )
 {
     *value -= lhs;
     return *this;
 }
-DoubleType& DoubleType::multiply( double lhs )
+DoubleType& DoubleType::operator*=( double lhs )
 {
     *value *= lhs;
     return *this;
 }
-DoubleType& DoubleType::divide( double lhs )
+DoubleType& DoubleType::operator/=( double lhs )
 {
     if ( lhs == 0.0 )
     {
@@ -369,22 +369,22 @@ DoubleType& DoubleType::powInternal(const double num)
 }
 
 
-IntType& IntType::add( int lhs )
+IntType& IntType::operator+=( int lhs )
 {
     *value += lhs;
     return *this;
 } 
-IntType& IntType::subtract( int lhs )
+IntType& IntType::operator-=( int lhs )
 {
     *value -= lhs;
     return *this;
 }
-IntType& IntType::multiply( int lhs )
+IntType& IntType::operator*=( int lhs )
 {
     *value *= lhs;
     return *this;
 }
-IntType& IntType::divide( int lhs )
+IntType& IntType::operator/=( int lhs )
 {
     if ( lhs == 0 )
     {
