@@ -422,25 +422,19 @@ struct Point
     {
         x *= m;
         y *= m;
-        return *this;
+        return (*this);
     }
     Point& multiply(const IntType& m)
     {
-        x *= m;
-        y *= m;
-        return *this;
+        return multiply(static_cast<float>(m));
     }
     Point& multiply(const FloatType& m)
     {
-        x *= m;
-        y *= m;
-        return *this;
+        return multiply(static_cast<float>(m));
     }
     Point& multiply(const DoubleType& m)
     {
-        x *= static_cast<float>(m);
-        y *= static_cast<float>(m);
-        return *this;
+        return multiply(static_cast<float>(m));
     }
 
     void toString()
