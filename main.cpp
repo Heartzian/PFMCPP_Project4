@@ -235,6 +235,7 @@ struct HeapA
 
 #include <iostream>
 #include <cmath>
+#include <functional>
 
 struct FloatType;
 struct DoubleType;
@@ -257,6 +258,9 @@ struct FloatType
     FloatType& pow(const FloatType&);
     FloatType& pow(const DoubleType&);
 
+    FloatType& apply(std::function<FloatType&(float)>);
+    FloatType& apply(void(*)(float&));
+
 private:
     float* value;
     FloatType& powInternal(const float num);
@@ -278,6 +282,9 @@ struct DoubleType
     DoubleType& pow(const IntType&);
     DoubleType& pow(const FloatType&);
     DoubleType& pow(const DoubleType&);
+    
+    DoubleType& apply(std::function<DoubleType&(double)>);
+    DoubleType& apply(void(*)(double&));
 
 private:
     double* value;
@@ -299,7 +306,10 @@ struct IntType
     IntType& pow(int pi);
     IntType& pow(const IntType&);
     IntType& pow(const FloatType&);
-    IntType& pow(const DoubleType&);    
+    IntType& pow(const DoubleType&);   
+    
+    IntType& apply(std::function<IntType&(int&)>);
+    IntType& apply(void(*)(int&));
 
 private:
     int* value;
@@ -359,6 +369,24 @@ FloatType& FloatType::powInternal(const float num)
     return *this;
 }
 
+FloatType& apply(std::function<FloatType&(float)> ff)
+{
+    if (ff) 
+    {
+        return ff(*value);
+    }
+    return *this;
+}
+
+FloatType& apply(void(*ff)(float&))
+{
+    if (ff) 
+    {
+        return ff(*value);
+    }
+    return *this;
+}
+
 
 
 DoubleType& DoubleType::operator+=( double lhs )
@@ -413,6 +441,25 @@ DoubleType& DoubleType::powInternal(const double num)
     return *this;
 }
 
+DoubleType& apply(std::function<DoubleType&(double)> df)
+{
+    if (df) 
+    {
+        return df(*value);
+    }
+    return *this;
+}
+
+DoubleType& apply(void(*df)(double&))
+{
+    if (ff) 
+    {
+        return ff(*value);
+    }
+    return *this;
+}
+
+
 
 IntType& IntType::operator+=( int lhs )
 {
@@ -465,6 +512,25 @@ IntType& IntType::powInternal(const int num)
     *value = static_cast<int>(std::pow( *value, num ));
     return *this;
 }
+
+IntType& apply(std::function<IntType&(int)> ifn)
+{
+    if (ifn) 
+    {
+        return ifn(*value);
+    }
+    return *this;
+}
+
+IntType& apply(void(*df)(int&))
+{
+    if (ifn) 
+    {
+        return ifn(*value);
+    }
+    return *this;
+}
+
 
 struct Point
 {
