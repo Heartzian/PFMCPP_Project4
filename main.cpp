@@ -287,302 +287,203 @@ struct HeapA
 #include <cmath>
 #include <functional>
 
-struct FloatType;
-struct DoubleType;
-struct IntType;
+// struct FloatType;
+// struct DoubleType;
+// struct IntType;
 
-struct FloatType
+template<typename NumericTemplate>
+struct Numeric
 {
-    explicit FloatType( float val ) : value( new float( val ) ) {}
-    ~FloatType() { delete value; }
+    using Type = NumericTemplate;
 
-    FloatType& operator+=( float lhs );
-    FloatType& operator-=( float lhs );
-    FloatType& operator*=( float lhs );
-    FloatType& operator/=( float lhs );
+    Numeric& operator+=( const Type& lhs );
+    Numeric& operator-=( const Type& lhs );
+    Numeric& operator*=( const Type& lhs );
+    Numeric& operator/=( const Type& lhs );
 
-    operator float() const { return *value; }
+    Numeric& pow(const Type& anyT);
+    Numeric& apply(std::function<Type&(float&)>);
+    Numeric& apply(void(*)(float&));
 
-    FloatType& pow(float pft);
-    FloatType& pow(const IntType&);
-    FloatType& pow(const FloatType&);
-    FloatType& pow(const DoubleType&);
+Private:
+    Numeric& powInternal(const Type num);
+};
 
-    FloatType& apply(std::function<FloatType&(float&)>);
-    FloatType& apply(void(*)(float&));
+
+struct Numeric<float>
+{
+    explicit Numeric( Type val ) : value( new Type( val ) ) {}
+    ~Numeric() { delete value; }
+
+    Numeric& operator+=( Type lhs ) {
+        *value += lhs;
+        return *this;
+    }
+    Numeric& operator-=( Type lhs ) {
+        *value -= lhs;
+        return *this;
+    }
+    Numeric& operator*=( Type lhs ) {
+        *value *= lhs;
+        return *this;
+    }
+    Numeric& operator/=( Type lhs ) {
+        if ( lhs == 0.0f )
+        {
+            std::cout << "warning: floating point division by zero!" << std::endl;
+        }
+        *value /= lhs; 
+        return *this;
+    }
+
+    operator Type() const { return *value; }
+
+    Numeric& pow(Type pft) {
+        return powInternal(pft);
+    }    
+    Numeric& pow(const Type& anyT) {
+        return powInternal(static_cast<float>(anyT));
+    }
+    Numeric& apply(std::function<Type&(float&)>ff) {
+        if ( ff ) {
+            return ff( *value );
+        }
+        return *this;
+    }
+    Numeric& apply(void(*)(float&)) {
+        if ( ff ) {
+            ff( *value );
+        }
+        return *this;
+    }
 
 private:
     // float* value;
     std::unique_ptr<float> value;
-    FloatType& powInternal(const float num);
- };    
+    Numeric& powInternal(const Type num) {
+        *value = std::pow( *value, num );
+        return *this;
+    }
+};    
 
-struct DoubleType
+struct Numeric<double>
 {
-    explicit DoubleType( double val ) : value( new double( val ) ) {}
-    ~DoubleType() { delete value; }
+    explicit Numeric( Type val ) : value( new Type( val ) ) {}
+    ~Numeric() { delete value; }
 
-    DoubleType& operator+=( double lhs );
-    DoubleType& operator-=( double lhs );
-    DoubleType& operator*=( double lhs );
-    DoubleType& operator/=( double lhs );
+    Numeric& operator+=( Type lhs ) {
+        *value += lhs;
+        return *this;
+    }
+    Numeric& operator-=( Type lhs ) {
+        *value -= lhs;
+        return *this;
+    }
+    Numeric& operator*=( Type lhs ) {
+        *value *= lhs;
+        return *this;
+    }
+    Numeric& operator/=( Type lhs ) {
+        if ( lhs == 0.0f ) {
+            std::cout << "warning: floating point division by zero!" << std::endl;
+        }
+        *value /= lhs; 
+        return *this;
+    }
 
-    operator double() const { return *value; }
+    operator Type() const { return *value; }
 
-    DoubleType& pow(double pdb);
-    DoubleType& pow(const IntType&);
-    DoubleType& pow(const FloatType&);
-    DoubleType& pow(const DoubleType&);
-    
-    DoubleType& apply(std::function<DoubleType&(double&)>);
-    DoubleType& apply(void(*)(double&));
+    Numeric& pow(Type pdb) {
+        return powInternal(pdb);
+    }
+    Numeric& pow(const Type& anyT) {
+        return powInternal(static_cast<double>(anyT));
+    }
+    Numeric& apply(std::function<Type&(double&)>df) {
+        if ( df ) 
+        {
+            return df( *value );
+        }
+        return *this;
+    }
+    Numeric& apply(void(*df)(double&)) {
+        if ( df ) 
+        {
+            df( *value );
+        }
+        return *this;
+    }
 
 private:
     // double* value;
     std::unique_ptr<double> value;
-    DoubleType& powInternal(const double num);
+    Numeric& powInternal(const Type num) {
+        *value = static_cast<double>(std::pow( *value, num ));
+        return *this;
+    }
 };
 
-struct IntType
+struct Numeric<Int>
 { 
-    explicit IntType( int val ) : value( new int( val ) ) {}
-    ~IntType() { delete value; }  
+    explicit Numeric( Type val ) : value( new Type( val ) ) {}
+    ~Numeric() { delete value; }  
 
-    IntType& operator+=( int lhs );
-    IntType& operator-=( int lhs );
-    IntType& operator*=( int lhs );
-    IntType& operator/=( int lhs );
+    explicit Numeric( Type val ) : value( new Type( val ) ) {}
+    ~Numeric() { delete value; }
 
-    operator int() const { return *value; }
+    Numeric& operator+=( Type lhs ) {
+        *value += lhs;
+        return *this;
+    }
+    Numeric& operator-=( Type lhs ) {
+        *value -= lhs;
+        return *this;
+    }
+    Numeric& operator*=( Type lhs ) {
+        *value *= lhs;
+        return *this;
+    }
+    Numeric& operator/=( Type lhs ) {
+        if ( lhs == 0 ) {
+            std::cout << "error: integer division by zero is an error and will crash the program!" << std::endl;
+            return *this;
+        }
+        *value /= lhs;
+        return *this;
+    }
 
-    IntType& pow(int pi);
-    IntType& pow(const IntType&);
-    IntType& pow(const FloatType&);
-    IntType& pow(const DoubleType&);   
+    operator Type() const { return *value; }
+
+    Numeric& pow(int pi) {
+        return powInternal(i);
+    }
+    Numeric& pow(const Type& anyT) {
+        return powInternal(static_cast<int>(anyT));
+    }
     
-    IntType& apply(std::function<IntType&(int&)>);
-    IntType& apply(void(*)(int&));
+    Numeric& apply(std::function<IntType&(int&)>ifn) {
+        if ( ifn ) {
+            return ifn( *value );
+        }
+        return *this;
+    }
+    Numeric& apply(void(*ifn)(int&)) {
+        if ( ifn ) 
+        {
+            ifn( *value );
+        }
+        return *this;
+    }
 
 private:
     // int* value;
     std::unique_ptr<int> value;
-    IntType& powInternal(const int num);
-};
-
-
-
-FloatType& FloatType::operator+=( float lhs)
-{
-    *value += lhs;
-    return *this;
-}
-FloatType& FloatType::operator-=( float lhs )
-{
-    *value -= lhs;
-    return *this;
-}
-FloatType& FloatType::operator*=( float lhs )
-{
-    *value *= lhs;
-    return *this;
-}
-FloatType& FloatType::operator/=( float lhs )
-{
-    if ( lhs == 0.0f )
-    {
-        std::cout << "warning: floating point division by zero!" << std::endl;
-    }
-    *value /= lhs; 
-    return *this;
-}
-
-FloatType& FloatType::pow(float pft)
-{
-    return powInternal(pft);
-}
-
-FloatType& FloatType::pow(const IntType& it)
-{
-    return powInternal(static_cast<float>(it));
-}
-
-FloatType& FloatType::pow(const FloatType& ft)
-{
-    return powInternal(static_cast<float>(ft));
-}
-
-FloatType& FloatType::pow(const DoubleType& dt)
-{
-    return powInternal(static_cast<float>(dt));
-}
-
-FloatType& FloatType::powInternal(const float num)
-{
-    *value = std::pow( *value, num );
-    return *this;
-}
-
-FloatType& FloatType::apply(std::function<FloatType&(float&)> ff)
-{
-    if ( ff ) 
-    {
-        return ff( *value );
-    }
-    return *this;
-}
-
-FloatType& FloatType::apply(void( *ff )(float&))
-{
-    if ( ff ) 
-    {
-        ff( *value );
-    }
-    return *this;
-}
-
-
-
-DoubleType& DoubleType::operator+=( double lhs )
-{
-    *value += lhs;
-    return *this;
-}
-DoubleType& DoubleType::operator-=( double lhs )
-{
-    *value -= lhs;
-    return *this;
-}
-DoubleType& DoubleType::operator*=( double lhs )
-{
-    *value *= lhs;
-    return *this;
-}
-DoubleType& DoubleType::operator/=( double lhs )
-{
-    if ( lhs == 0.0 )
-    {
-        std::cout << "warning: floating point division by zero!" << std::endl;
-    }
-    *value /= lhs;
-    return *this;  
-}
-
-
-DoubleType& DoubleType::pow(double db)
-{
-    return powInternal(db);
-}
-
-DoubleType& DoubleType::pow(const IntType& it)
-{
-    return powInternal(static_cast<double>(it));
-}
-
-DoubleType& DoubleType::pow(const FloatType& ft)
-{
-    return powInternal(static_cast<double>(ft));
-}
-
-DoubleType& DoubleType::pow(const DoubleType& dt)
-{
-    return powInternal(static_cast<double>(dt));
-}
-
-DoubleType& DoubleType::powInternal(const double num)
-{
-    *value = static_cast<double>(std::pow( *value, num ));
-    return *this;
-}
-
-DoubleType& DoubleType::apply(std::function<DoubleType&(double&)> df)
-{
-    if ( df ) 
-    {
-        return df( *value );
-    }
-    return *this;
-}
-
-DoubleType& DoubleType::apply(void(*df)(double&))
-{
-    if ( df ) 
-    {
-        df( *value );
-    }
-    return *this;
-}
-
-
-
-IntType& IntType::operator+=( int lhs )
-{
-    *value += lhs;
-    return *this;
-} 
-IntType& IntType::operator-=( int lhs )
-{
-    *value -= lhs;
-    return *this;
-}
-IntType& IntType::operator*=( int lhs )
-{
-    *value *= lhs;
-    return *this;
-}
-IntType& IntType::operator/=( int lhs )
-{
-    if ( lhs == 0 )
-    {
-        std::cout << "error: integer division by zero is an error and will crash the program!" << std::endl;
+    Numeric& powInternal(const int num) {
+        *value = static_cast<int>(std::pow( *value, num ));
         return *this;
     }
-    *value /= lhs;
-    return *this;
-}
+};
 
-IntType& IntType::pow(int i)
-{
-    return powInternal(i);
-}
-
-IntType& IntType::pow(const IntType& it)
-{
-    return powInternal(static_cast<int>(it));
-}
-
-IntType& IntType::pow(const FloatType& ft)
-{
-    return powInternal(static_cast<int>(ft));
-}
-
-IntType& IntType::pow(const DoubleType& dt)
-{
-    return powInternal(static_cast<int>(dt));
-}
-
-IntType& IntType::powInternal(const int num)
-{
-    *value = static_cast<int>(std::pow( *value, num ));
-    return *this;
-}
-
-IntType& IntType::apply(std::function<IntType&(int&)> ifn)
-{
-    if ( ifn ) 
-    {
-        return ifn( *value );
-    }
-    return *this;
-}
-
-IntType& IntType::apply(void(*ifn)(int&))
-{
-    if ( ifn ) 
-    {
-        ifn( *value );
-    }
-    return *this;
-}
 
 
 struct Point
